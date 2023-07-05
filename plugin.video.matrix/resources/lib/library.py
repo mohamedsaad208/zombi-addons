@@ -23,7 +23,6 @@ SITE_NAME = 'Library'
 
 class cLibrary:
     ADDON = addon()
-    icons = ADDON.getSetting('defaultIcons')
 
     def __init__(self):
         self.__sMovieFolder = self.ADDON.getSetting('Library_folder_Movies')
@@ -112,11 +111,11 @@ class cLibrary:
 
         folder = self.ADDON.getSetting('Library_folder_Movies')
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30120), icons + '/Movies.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30120), 'films.png', oOutputParameterHandler)
 
         folder = self.ADDON.getSetting('Library_folder_TVs')
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30121), icons + '/TVShows'.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30121), 'series.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
@@ -129,7 +128,7 @@ class cLibrary:
             folder = 'special://userdata/addon_data/plugin.video.matrix/Enregistrement"/>'
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', folder)
-        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30225), icons + '/Download.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'openLibrary', self.ADDON.VSlang(30225), 'download.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
@@ -160,7 +159,7 @@ class cLibrary:
             else:
                 oOutputParameterHandler = cOutputParameterHandler()
                 oOutputParameterHandler.addParameter('siteUrl', sFile + '/' + i)
-                oGui.addDir(SITE_IDENTIFIER, 'openLibrary', sTitle, icons + '/Movies.png', oOutputParameterHandler)
+                oGui.addDir(SITE_IDENTIFIER, 'openLibrary', sTitle, 'films.png', oOutputParameterHandler)
 
         if addon_handle:
             xbmcplugin.endOfDirectory(addon_handle)

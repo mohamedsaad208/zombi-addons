@@ -9,10 +9,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
-from resources.lib.comaddon import progress, VSlog, isMatrix, siteManager, addon
-
-ADDON = addon()
-icons = ADDON.getSetting('defaultIcons')
+from resources.lib.comaddon import progress, VSlog, isMatrix, siteManager
  
 SITE_IDENTIFIER = 'ahdaf'
 SITE_NAME = 'Ahdaf'
@@ -26,7 +23,7 @@ def load():
     
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', SPORT_FOOT[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أهداف و ملخصات', icons + '/Sport.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أهداف و ملخصات', 'sport.png', oOutputParameterHandler)
     
     oGui.setEndOfDirectory()
 

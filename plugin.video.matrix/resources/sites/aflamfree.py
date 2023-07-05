@@ -7,10 +7,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
-from resources.lib.comaddon import progress, VSlog, siteManager, addon
-
-ADDON = addon()
-icons = ADDON.getSetting('defaultIcons')
+from resources.lib.comaddon import progress, VSlog, siteManager	
 
 SITE_IDENTIFIER = 'aflamfree'
 SITE_NAME = 'Aflamfree'
@@ -29,10 +26,10 @@ def load():
 
 	oOutputParameterHandler = cOutputParameterHandler()
 	oOutputParameterHandler.addParameter('siteUrl', URL_SEARCH[0])
-	oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'Search Movies', icons + '/Search.png', oOutputParameterHandler)
+	oGui.addDir(SITE_IDENTIFIER, 'showSearch', 'Search Movies', 'search.png', oOutputParameterHandler)
 	
 	oOutputParameterHandler.addParameter('siteUrl', MOVIE_PACK[0])
-	oGui.addDir(SITE_IDENTIFIER, 'showPack', 'أقسام الموقع', icons + '/All.png', oOutputParameterHandler)
+	oGui.addDir(SITE_IDENTIFIER, 'showPack', 'أقسام الموقع', 'icon.png', oOutputParameterHandler)
 	
 	oGui.setEndOfDirectory()
 
@@ -42,7 +39,7 @@ def showYears():
     for i in reversed(range(1921, 2022)):
         sYear = str(i)
         oOutputParameterHandler.addParameter('siteUrl', URL_MAIN + '/release-year/' + sYear)  # / inutile
-        oGui.addDir(SITE_IDENTIFIER, 'showLive', sYear, icons + '/Calendar.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'showLive', sYear, 'annees.png', oOutputParameterHandler)
     oGui.setEndOfDirectory()
 	
 def showSearch():
@@ -83,8 +80,7 @@ def showMoviesearch(sSearch = ''):
  
             sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","") 
             siteUrl = aEntry[0]
-            s1Thumb = aEntry[1] 
-            sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
+            sThumb = aEntry[1] 
             sYear = ''
             m = re.search('([0-9]{4})', sTitle)
             if m:
@@ -107,7 +103,7 @@ def showMoviesearch(sSearch = ''):
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showMoviesearch', '[COLOR teal]Next >>>[/COLOR]', icons + '/next.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMoviesearch', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
     if not sSearch:
         oGui.setEndOfDirectory()
@@ -123,8 +119,8 @@ def showPack(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 #([^<]+) .+? 
-    VSlog(sUrl)
-    sPattern = 'style=\"font-size: large;\"><a href=\"([^<]+)\">(.+?)</a>'
+
+    sPattern = 'style="font-size: large;"><a href="([^<]+)">([^<]+)</a><br />'
 
 
     oParser = cParser()
@@ -135,35 +131,8 @@ def showPack(sSearch = ''):
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
             sTitle = aEntry[1].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","") 
-            
-            
-            if 'عربية' in sTitle:
-                sThumb = icons + '/Arabic.png'
-            else:
-                if 'هندية' in sTitle:
-                    sThumb = icons + '/Hindi.png'
-                else:
-                    if 'اسيوية' in sTitle:
-                        sThumb = icons + '/Asian.png'
-                    else:
-                        if 'كرتون' in sTitle:
-                            sThumb = icons + '/Carton.png'
-                        else:
-                            if 'تركية' in sTitle:
-                                sThumb = icons + '/Turkish.png'
-                            else:
-                                if 'كورية' in sTitle:
-                                    sThumb = icons + '/MoviesKorean.png'
-                                else:
-                                    if 'مدبلج' in sTitle or 'مدبلجة' in sTitle:
-                                        sThumb = icons + '/Dubbed.png'
-                                    else:
-                                        if 'افلام' in sTitle:
-                                            sThumb = icons + '/Movies.png'
-            
-            
+            sThumb = aEntry[1]
             siteUrl = aEntry[0]+'/page/1'
-            VSlog(siteUrl)
             sDesc = ''
 			
 
@@ -172,15 +141,13 @@ def showPack(sSearch = ''):
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 
-            #oGui.addMisc(SITE_IDENTIFIER, 'showLive', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
-
-            oGui.addDir(SITE_IDENTIFIER, 'showLive', sTitle, sThumb, oOutputParameterHandler)
-    
+            oGui.addMisc(SITE_IDENTIFIER, 'showLive', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+ 
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showPack', '[COLOR teal]Next >>>[/COLOR]', icons + '/next.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showPack', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
     if not sSearch:
         oGui.setEndOfDirectory()
@@ -218,8 +185,7 @@ def showLive():
         for aEntry in aResult[1]: 
             sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","") 
             siteUrl = aEntry[0]
-            s1Thumb = aEntry[1]
-            sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
+            sThumb = aEntry[1]
             sYear = ''
             m = re.search('([1-2][0-9]{3})', sTitle)
             if m:
@@ -244,8 +210,7 @@ def showLive():
         for aEntry in aResult[1]:
             sTitle = aEntry[2].replace("مشاهدة","").replace("مسلسل","").replace("انمي","").replace("مترجمة","").replace("مترجم","").replace("فيلم","").replace("والأخيرة","").replace("مدبلج للعربية","مدبلج").replace("والاخيرة","").replace("كاملة","").replace("حلقات كاملة","").replace("اونلاين","").replace("مباشرة","").replace("انتاج ","").replace("جودة عالية","").replace("كامل","").replace("HD","").replace("السلسلة الوثائقية","").replace("الفيلم الوثائقي","").replace("اون لاين","") 
             siteUrl = aEntry[0]
-            s1Thumb = aEntry[1] 
-            sThumb = re.sub(r'-\d*x\d*.','.', s1Thumb)
+            sThumb = aEntry[1] 
             sDesc = "" 
  
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
@@ -265,7 +230,7 @@ def showLive():
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl',siteUrl)
     oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-    oGui.addDir(SITE_IDENTIFIER, 'showLive', sTitle,icons + '/Next.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showLive', sTitle,'next.png', oOutputParameterHandler)
     
     oGui.setEndOfDirectory() 
   

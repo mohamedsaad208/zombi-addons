@@ -48,18 +48,6 @@ msgctxt "#30010"
 msgid "Color Text note"
 msgstr ""
 
-msgctxt "#3001099"
-msgid "Icons"
-msgstr ""
-
-msgctxt "#3001091"
-msgid "Classic"
-msgstr ""
-
-msgctxt "#3001092"
-msgid "Modern"
-msgstr ""
-
 msgctxt "#30011"
 msgid "Initialization error"
 msgstr ""
@@ -1029,7 +1017,7 @@ msgid "Movies (Popular)"
 msgstr ""
 
 msgctxt "#30426"
-msgid "Movies (Recently Added)"
+msgid "Movies (News)"
 msgstr ""
 
 msgctxt "#30427"
@@ -1332,4 +1320,3 @@ msgstr ""
 msgctxt "#70013"
 msgid "Pack"
 msgstr ""
-

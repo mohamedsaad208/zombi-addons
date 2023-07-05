@@ -28,50 +28,47 @@ view = '500'
 tmdb_session = ''
 tmdb_account = ''
 
-Addon = addon()
-icons = Addon.getSetting('defaultIcons')
 
 def load():
     oGui = cGui()
     addons = addon()
-    ADDON = addons
-    icons = addons.getSetting('defaultIcons')
+
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', 'http://')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearch', '%s (TMDB)' % addons.VSlang(30330), icons + '/Search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSearch', '%s (TMDB)' % addons.VSlang(30330), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'movie/popular')
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30425), '/Movies.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30425), 'comments.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'movie/now_playing')
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30426),icons + '/Movies.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30426), 'films.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'movie/top_rated')
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30427), icons + '/Top.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30427), 'notes.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'genre/movie/list')
-    oGui.addDir(SITE_IDENTIFIER, 'showGenreMovie', addons.VSlang(30428), icons + '/Genres.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showGenreMovie', addons.VSlang(30428), 'genres.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'tv/popular')
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30429), '/TVShows.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30429), 'comments.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'tv/on_the_air')
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30430), icons + '/TVShows.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30430), 'series.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'tv/top_rated')
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30431), icons + '/TVShows.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30431), 'notes.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'genre/tv/list')
-    oGui.addDir(SITE_IDENTIFIER, 'showGenreTV', addons.VSlang(30432), icons + '/Genres.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showGenreTV', addons.VSlang(30432), 'genres.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'person/popular')
-    oGui.addDir(SITE_IDENTIFIER, 'showActors', addons.VSlang(30433), icons + '/Actor.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showActors', addons.VSlang(30433), 'actor.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'http://')
-    oGui.addDir('topimdb', 'load', 'Top Imdb', icons + '/Top.png', oOutputParameterHandler)
+    oGui.addDir('topimdb', 'load', 'Top Imdb', 'star.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'http://')
-    oGui.addDir(SITE_IDENTIFIER, 'showFolderList', 'Listes TMDB', icons + '/Lists.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showFolderList', 'Listes TMDB', 'listes.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -82,13 +79,13 @@ def showSearch():
 
     oOutputParameterHandler = cOutputParameterHandler()
     oOutputParameterHandler.addParameter('siteUrl', 'search/movie')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearchMovie', addons.VSlang(30423), icons + '/Search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSearchMovie', addons.VSlang(30423), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'search/tv')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearchSerie', addons.VSlang(30424), icons + '/Search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSearchSerie', addons.VSlang(30424), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'search/person')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearchActor', addons.VSlang(30450), icons + '/Search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSearchActor', addons.VSlang(30450), 'search.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -102,7 +99,7 @@ def showMyTmdb():
     if tmdb_session == '':
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', 'https://')
-        oGui.addDir(SITE_IDENTIFIER, 'getToken', addons.VSlang(30305), icons + '/tmdb.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getToken', addons.VSlang(30305), 'tmdb.png', oOutputParameterHandler)
     else:
         # pas de deco possible avec l'api donc on test l'username sinon ont supprime tous
         result = grab.getUrl('account', '1', 'session_id=' + tmdb_session)
@@ -120,45 +117,45 @@ def showMyTmdb():
             # /account/{account_id}/favorite/movies
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/favorite/movies' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30434),icons + '/Movies.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30434), 'films.png', oOutputParameterHandler)
 
             # /account/{account_id}/rated/movies
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/rated/movies' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30435), icons + '/Movies.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30435), 'notes.png', oOutputParameterHandler)
 
             # /account/{account_id}/watchlist/movies
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/watchlist/movies' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30436), icons + '/Watchlist.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30436), 'views.png', oOutputParameterHandler)
 
             # /account/{account_id}/favorite/tv
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/favorite/tv' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30437), icons + '/TVShows.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30437), 'series.png', oOutputParameterHandler)
 
             # /account/{account_id}/rated/tv
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/rated/tv' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30438), icons + '/TVShows.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30438), 'notes.png', oOutputParameterHandler)
 
             # /account/{account_id}/watchlist/tv
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/watchlist/tv' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30440), icons + '/Watchlist.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30440), 'views.png', oOutputParameterHandler)
 
             # /account/{account_id}/rated/tv/episodes
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/rated/tv/episodes' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30439), icons + '/Episode.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', addons.VSlang(30439), 'notes.png', oOutputParameterHandler)
 
             # /account/{account_id}/lists
             oOutputParameterHandler.addParameter('session_id', tmdb_session)
             oOutputParameterHandler.addParameter('siteUrl', 'account/%s/lists' % int(result['id']))
-            oGui.addDir(SITE_IDENTIFIER, 'showUserLists', addons.VSlang(30441), icons + '/Lists.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showUserLists', addons.VSlang(30441), 'listes.png', oOutputParameterHandler)
 
             oOutputParameterHandler.addParameter('siteUrl', 'http://')
-            oGui.addDir(SITE_IDENTIFIER, 'ouTMyTmdb', addons.VSlang(30309), icons + '/Lists.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'ouTMyTmdb', addons.VSlang(30309), 'listes.png', oOutputParameterHandler)
 
         else:
             ouTMyTmdb()
@@ -446,7 +443,7 @@ def showGenreMovie():
                 sTitle = sTitle.encode("utf-8")
             sUrl = 'genre/' + str(sId) + '/movies'
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', str(sTitle), icons + '/Genres.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', str(sTitle), 'genres.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -471,7 +468,7 @@ def showGenreTV():
             sUrl = 'discover/tv'
             oOutputParameterHandler.addParameter('siteUrl', sUrl)
             oOutputParameterHandler.addParameter('genre', sId)
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, icons + '/Genres.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, 'genres.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -505,7 +502,7 @@ def showUserLists():
 
             # sUrl = API_URL + '/genre/' + str(sId) + '/tv'
             oOutputParameterHandler.addParameter('siteUrl', sId)
-            oGui.addDir(SITE_IDENTIFIER, 'showLists', sTitle, icons + '/Genres.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showLists', sTitle, 'genres.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -532,7 +529,7 @@ def showFolderList():
     oOutputParameterHandler = cOutputParameterHandler()
     for sTitle, sUrl in liste:
         oOutputParameterHandler.addParameter('siteUrl', sUrl)
-        oGui.addDir(SITE_IDENTIFIER, 'showLists', sTitle, icons + '/Lists.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'showLists', sTitle, 'listes.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -601,7 +598,7 @@ def showMovies(sSearch=''):
                 oGuiElement.setFunction('showSearch')
                 oGuiElement.setTitle(sTitle)
                 oGuiElement.setFileName(sTitle)
-                oGuiElement.setIcon(icons + '/Movies.png')
+                oGuiElement.setIcon('films.png')
                 oGuiElement.setMeta(1)
                 oGuiElement.setThumbnail(sThumb)
                 oGuiElement.setPoster(sThumb)
@@ -706,7 +703,7 @@ def showSeries(sSearch=''):
                 oGuiElement.setFunction('showSeriesSaison')
                 oGuiElement.setTitle(sTitle)
                 oGuiElement.setFileName(sTitle)
-                oGuiElement.setIcon(icons + '/TVShows.png')
+                oGuiElement.setIcon('series.png')
                 oGuiElement.setMeta(2)
                 oGuiElement.setThumbnail(sThumb)
                 oGuiElement.setPoster(sThumb)
@@ -814,7 +811,7 @@ def showSeriesSaison():
             oGuiElement.setFunction('showSeriesEpisode')
             oGuiElement.setTitle(sTitle)
             oGuiElement.setFileName(sMovieTitle)
-            oGuiElement.setIcon(icons + '/TVShows.png')
+            oGuiElement.setIcon('series.png')
             oGuiElement.setMeta(2)
             oGuiElement.setThumbnail(sThumb)
             oGuiElement.setPoster(sThumb)
@@ -921,7 +918,7 @@ def showSeriesEpisode():
             oGuiElement.setFunction('showSearch')
             oGuiElement.setTitle(sTitle)
             oGuiElement.setFileName(sMovieTitle)
-            oGuiElement.setIcon(icons + '/TVShows.png')
+            oGuiElement.setIcon('series.png')
             oGuiElement.setMeta(2)
             oGuiElement.setThumbnail(sThumb)
             oGuiElement.setFanart(sFanart)
@@ -1077,7 +1074,7 @@ def showFilmActor():
             oGuiElement.setFunction('showSearch')
             oGuiElement.setTitle(sTitle)
             oGuiElement.setFileName(sTitle)
-            oGuiElement.setIcon(icons + '/Movies.png')
+            oGuiElement.setIcon('films.png')
             oGuiElement.setMeta(1)
             oGuiElement.setThumbnail(sThumb)
             oGuiElement.setPoster(sThumb)
@@ -1151,11 +1148,11 @@ def showLists():
             oGuiElement.setTitle(sDisplayTitle)
             oGuiElement.setFileName(sTitle)
             if sType == 'movie':
-                oGuiElement.setIcon(icons + '/Movies.png')
+                oGuiElement.setIcon('films.png')
                 oGuiElement.setMeta(1)
                 oGuiElement.setCat(1)
             elif sType == 'tv':
-                oGuiElement.setIcon(icons + '/TVShows.png')
+                oGuiElement.setIcon('series.png')
                 oGuiElement.setMeta(2)
                 oGuiElement.setCat(2)
             oGuiElement.setThumbnail(sThumb)
